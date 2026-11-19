@@ -103,144 +103,164 @@ ARROW = '<path d="M8 12c26-6 58 2 76 22s20 34 18 48"/><path d="M88 70l14 14 10-1
 CIRCLE = "M150 14C112 2 46 6 20 32 0 54 14 86 64 98c48 11 112 4 128-26 14-26-16-52-74-58-30-3-56 2-80 12"
 
 
-# ------------------------------------------------------------------ board
-# A split-flap departures board. Each letter is a flap cell that rolls
-# through the alphabet until it lands, so the board settles left to right.
-# The flights are real live projects; the status column is a real result.
-FLAP_ALPHA = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#+&.,-/"
-FLAP_STEP = 0.038
-FLAP = {  # cell width, height, gap, font size
-    "L": (50, 72, 5, 50),
-    "M": (24, 36, 3, 24),
-    "S": (20, 30, 2.5, 19),
-}
-BOARD_BG, CELL, CELL_TOP = "#070706", "#1a1a18", "#21211f"
-FLIGHTS = [  # flight, destination, service, status
-    ("AK101", "SHUBHARAMBH", "SITE+SEO", "#1 FOR 17"),
-    ("AK102", "MATRIX ACRES", "CRM+ADS", "300+ MODS"),
-    ("AK103", "VISIONWAVE", "WEBSITE", "29 TOOLS"),
-    ("AK104", "LMC STORE", "E-COM", "LIVE"),
-    ("AK105", "HARI SABZI", "SITE+APP", "LIVE"),
-    ("AK106", "EZZYCOMMERCE", "E-COM", "LIVE"),
+# ------------------------------------------------------------------ editor
+# The hero: a code editor. The profile is typed out as a TypeScript object,
+# then the terminal below "deploys" the six live projects, each with its
+# real result. Typing uses SMIL clip widths, so it runs inside an <img>.
+KW, STR, NUM, KEY, PUN, FN, COM = ORANGE_LT, "#e3c98f", GREEN, "#ece9e1", "#8d8a82", "#ffb08a", "#6f6c65"
+CODE = [
+    [("c", "// Anek Kumar, Noida, India")],
+    [("k", "export const "), ("f", "anek"), ("p", " = {")],
+    [("y", "  role"), ("p", ": ["), ("s", '"Full Stack Developer"'), ("p", ", "), ("s", '"Digital Marketer"'), ("p", "],")],
+    [("y", "  now"), ("p", ": "), ("s", '"Shubharambh Infra Advisors"'), ("p", ",")],
+    [("y", "  code"), ("p", ": ["), ("s", '"Python"'), ("p", ", "), ("s", '"Django"'), ("p", ", "), ("s", '"PHP"'), ("p", ", "), ("s", '"MySQL"'), ("p", ", "), ("s", '"React"'), ("p", "],")],
+    [("y", "  growth"), ("p", ": ["), ("s", '"SEO"'), ("p", ", "), ("s", '"Meta Ads"'), ("p", ", "), ("s", '"Google Ads"'), ("p", ", "), ("s", '"GA4"'), ("p", "],")],
+    [("y", "  since"), ("p", ": "), ("n", "2023"), ("p", ",")],
+    [("y", "  openTo"), ("p", ": "), ("s", '"freelance"'), ("p", ",")],
+    [("p", "};")],
+    [],
+    [("k", "await "), ("f", "anek"), ("p", "."), ("f", "deploy"), ("p", "();  "), ("c", "// see terminal ↓")],
 ]
+DEPLOYS = [  # domain, what I did, real result
+    ("shubharambhinfraadvisors.com", "site + seo", "#1 on Google for 17 keywords"),
+    ("matrixacres.in", "crm + ads", "300+ module CRM"),
+    ("visionwavetechnology.com", "website", "29 free tools"),
+    ("lmcstore.in", "e-commerce", "live"),
+    ("harisabziwala.com", "site + app", "live, with rider app"),
+    ("ezzycommerce.store", "e-commerce", "live"),
+]
+TOK = {"c": COM, "k": KW, "f": FN, "p": PUN, "y": KEY, "s": STR, "n": NUM}
 
 
-def board():
-    W, X = 1000, 40
-    inner = W - 2 * X
-    defs, body, used = [], [], set()
+def check(x, y):
+    return f'<path d="M{x} {y - 5}l3.6 3.8L{x + 10} {y - 11}" fill="none" stroke="{GREEN}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
 
-    def strip(key, color, cid):
-        w, h, _, fs = FLAP[key]
-        base = h / 2 + fs * 0.36
-        spans = "".join(f'<tspan x="{w / 2}" y="{i * h + base:.1f}">{esc(B.use(ch))}</tspan>'
-                        for i, ch in enumerate(FLAP_ALPHA) if ch != " ")
-        defs.append(f'<text id="s{cid}" class="b" text-anchor="middle" font-size="{fs}" fill="{color}">{spans}</text>')
 
-    def grid_defs(key):
-        w, h, g, _ = FLAP[key]
-        half = h / 2
-        defs.append(f'<clipPath id="c{key}"><rect width="{w}" height="{h}" rx="3"/></clipPath>')
-        # empty flap, and a hinge line drawn over the letters
-        defs.append(f'<pattern id="e{key}" x="{X}" y="0" width="{w + g}" height="{h}" patternUnits="userSpaceOnUse">'
-                    f'<rect width="{w}" height="{h}" rx="3" fill="{CELL}"/><rect width="{w}" height="{half}" rx="3" fill="{CELL_TOP}"/></pattern>')
-        defs.append(f'<pattern id="k{key}" x="{X}" y="0" width="{w + g}" height="{h}" patternUnits="userSpaceOnUse">'
-                    f'<rect y="{half - .6}" width="{w}" height="1.2" fill="{BOARD_BG}"/>'
-                    f'<rect y="{half - 3}" width="1.6" height="6" fill="{BOARD_BG}"/><rect x="{w - 1.6}" y="{half - 3}" width="1.6" height="6" fill="{BOARD_BG}"/></pattern>')
+def editor():
+    W = 1000
+    fs, lh = 15, 24
+    cw = M.width("x", fs)
+    tfs, tlh = 14, 23
+    tcw = M.width("x", tfs)
+    defs, body = [], []
+    t = 0.5  # running clock (seconds)
 
-    def row(key, y, cells, parts, delay):
-        """parts: list of (start_cell, text, strip_id). Draws empty flaps, then letters, then hinges."""
-        w, h, g, _ = FLAP[key]
-        pitch = w + g
-        width = cells * pitch - g
-        # patterns are anchored at y=0, so shift each row's rect with a transform
-        out = [f'<g transform="translate(0 {y})">',
-               f'<rect x="{X}" width="{width}" height="{h}" fill="url(#e{key})"/>']
-        n = 0
-        for start, text, sid in parts:
-            for i, ch in enumerate(text):
-                if ch == " ":
-                    continue
-                t = FLAP_ALPHA.index(ch)
-                cx = X + (start + i) * pitch
-                d = delay + (start + i) * 0.028
-                out.append(f'<g transform="translate({cx:.1f} 0)"><g clip-path="url(#c{key})">'
-                           f'<use href="#s{sid}" class="r" style="transform:translateY(-{t * h}px);animation-duration:{t * FLAP_STEP:.3f}s;animation-delay:{d:.3f}s;animation-timing-function:steps({t},start)"/></g>'
-                           f'<rect class="fl" width="{w}" height="{h / 2}" fill="{CELL_TOP}" style="animation-duration:{FLAP_STEP}s;animation-delay:{d:.3f}s;animation-iteration-count:{t}"/></g>')
-                n += 1
-        out.append(f'<rect x="{X}" width="{width}" height="{h}" fill="url(#k{key})"/></g>')
-        return "".join(out)
+    def typed(i, x, y, n, per, size_h):
+        """clip that reveals n characters starting at x, one per `per` seconds, from time t."""
+        nonlocal t
+        c = cw if size_h == fs else tcw
+        vals = ";".join(f"{c * k:.1f}" for k in range(n + 1))
+        defs.append(f'<clipPath id="t{i}"><rect x="{x}" y="{y - size_h - 2}" height="{size_h + 10}" width="0">'
+                    f'<animate attributeName="width" begin="{t:.2f}s" dur="{per * n:.2f}s" fill="freeze" calcMode="discrete" values="{vals}"/></rect></clipPath>')
+        t += per * n
 
-    for key in FLAP:
-        grid_defs(key)
-    strip("L", PAPER, "L")
-    strip("M", PAPER, "M")
-    strip("S", PAPER, "S")
-    strip("S", ORANGE_LT, "So")
+    # window chrome
+    TB = 42
+    body.append(f'<line x1="0" y1="{TB}" x2="{W}" y2="{TB}" stroke="{LINE}"/>')
+    for k in range(3):
+        body.append(f'<circle cx="{24 + k * 18}" cy="{TB / 2}" r="5" fill="#2e2d2a"/>')
+    tabs = [("anek.ts", True), ("results.json", False), ("README.md", False)]
+    x = 92
+    for name, active in tabs:
+        tw = M.width(name, 12.5) + 36
+        if active:
+            body.append(f'<rect x="{x}" y="1" width="{tw:.1f}" height="{TB - 1}" fill="#151513"/>'
+                        f'<rect x="{x}" y="1" width="{tw:.1f}" height="2" fill="{ORANGE}"/>')
+        body.append(f'<text class="m" x="{x + 18}" y="{TB / 2 + 4.5}" font-size="12.5" fill="{PAPER if active else DIM}">{esc(M.use(name))}</text>')
+        x += tw
+    body.append(f'<text class="m" x="{W - 24}" y="{TB / 2 + 4.5}" font-size="12" fill="{DIM}" text-anchor="end">{esc(M.use("~/anekkumar9518"))}</text>')
 
-    # header
-    y = 56
-    plane = (f'<g transform="translate({X} {y - 19}) scale(1.05)" fill="none" stroke="{ORANGE_LT}" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'
-             '<path d="M2 15.5l2-.6 4 1.6 4.6-2.6L6 8.6l2.4-.8 9 3.6 4.2-2.4c1.1-.6 2.4-.4 2.8.4.4.8-.2 1.8-1.3 2.4L8.4 19.6c-.9.5-2 .5-2.9 0Z"/><path d="M3 23h19"/></g>')
-    body.append(plane)
-    body.append(f'<text class="m" x="{X + 36}" y="{y}" font-size="17" letter-spacing="5" fill="{PAPER}" font-weight="700">{esc(M.use("DEPARTURES"))}</text>')
-    right = "NOIDA, IN  ·  SINCE 2023"
-    body.append(f'<text class="m" x="{W - X}" y="{y}" font-size="13" letter-spacing="2" fill="{DIM}" text-anchor="end">{esc(M.use(right))}</text>')
-    body.append(f'<line x1="{X}" y1="{y + 22}" x2="{W - X}" y2="{y + 22}" stroke="{LINE}"/>')
+    # code
+    GX, CX = 30, 78
+    y = TB + 34
+    for i, line in enumerate(CODE):
+        body.append(f'<text class="m" x="{GX + 22}" y="{y}" font-size="13" fill="#4a4843" text-anchor="end">{i + 1}</text>')
+        text = "".join(s for _, s in line)
+        if text:
+            spans = "".join(f'<tspan fill="{TOK[c]}"{" font-style=\"italic\"" if c == "c" else ""}>{esc(M.use(s))}</tspan>' for c, s in line)
+            typed(i, CX, y, len(text), 0.011, fs)
+            body.append(f'<text class="m" x="{CX}" y="{y}" font-size="{fs}" clip-path="url(#t{i})">{spans}</text>')
+            t += 0.04
+        y += lh
+    yCodeEnd = y - lh
+    t += 0.3
+    # minimap
+    my = TB + 22
+    for line in CODE:
+        mx = W - 92
+        for c, s in line:
+            if s.strip():
+                lead = len(s) - len(s.lstrip())
+                body.append(f'<rect x="{mx + lead * 0.9:.1f}" y="{my}" width="{len(s.strip()) * 0.9:.1f}" height="2.2" fill="{TOK[c]}" opacity=".45"/>')
+            mx += len(s) * 0.9
+        my += 4.4
 
-    # name and role
-    wL, hL, gL, _ = FLAP["L"]
-    nL = int((inner + gL) // (wL + gL))
-    yName = 104
-    body.append(row("L", yName, nL, [(0, "ANEK KUMAR", "L")], 0.15))
-    wM, hM, gM, _ = FLAP["M"]
-    nM = int((inner + gM) // (wM + gM))
-    yRole = yName + hL + 16
-    body.append(row("M", yRole, nM, [(0, "FULL STACK DEV & DIGITAL MARKETER", "M")], 0.9))
+    # panel
+    PY = yCodeEnd + 30
+    body.append(f'<line x1="0" y1="{PY}" x2="{W}" y2="{PY}" stroke="{LINE}"/>')
+    px = 30
+    for name, active in [("PROBLEMS", False), ("OUTPUT", False), ("TERMINAL", True)]:
+        body.append(f'<text class="m" x="{px}" y="{PY + 26}" font-size="11" letter-spacing="1.4" fill="{PAPER if active else DIM}">{esc(M.use(name))}</text>')
+        w = M.width(name, 11, 1.4)
+        if active:
+            body.append(f'<rect x="{px}" y="{PY + 34}" width="{w:.1f}" height="1.5" fill="{ORANGE}"/>')
+        px += w + 28
 
-    # timetable
-    wS, hS, gS, _ = FLAP["S"]
-    pS = wS + gS
-    nS = int((inner + gS) // pS)
-    cols = [(0, "FLIGHT"), (6, "DESTINATION"), (21, "SERVICE"), (30, "STATUS")]
-    yLab = yRole + hM + 38
-    for c, label in cols:
-        body.append(f'<text class="m" x="{X + c * pS}" y="{yLab}" font-size="11" letter-spacing="2" fill="{DIM}">{esc(M.use(label))}</text>')
-    y0 = yLab + 12
-    for i, (fl, dest, svc, status) in enumerate(FLIGHTS):
-        parts = [(0, fl, "S"), (6, dest, "S"), (21, svc, "S"), (30, status, "So")]
-        body.append(row("S", y0 + i * (hS + 8), nS, parts, 1.6 + i * 0.22))
-    yEnd = y0 + len(FLIGHTS) * (hS + 8) + 14
+    # terminal
+    TX = 30
+    y = PY + 66
+    prompt = "anek@noida ~/work $ "
+    cmd = "npm run deploy -- --all"
+    body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" style="animation-delay:{t:.2f}s"><tspan fill="{ORANGE_LT}">{esc(M.use(prompt))}</tspan></text>')
+    cx = TX + tcw * len(prompt)
+    t += 0.3
+    typed("cmd", cx, y, len(cmd), 0.045, tfs)
+    body.append(f'<text class="m" x="{cx:.1f}" y="{y}" font-size="{tfs}" fill="{PAPER}" clip-path="url(#tcmd)">{esc(M.use(cmd))}</text>')
+    t += 0.5
+    y += tlh + 6
+    for dom, what, res in DEPLOYS:
+        g = [check(TX + 1, y), f'<text class="m" x="{TX + 22}" y="{y}" font-size="{tfs}">'
+             f'<tspan fill="{PAPER}">{esc(M.use(dom.ljust(30)))}</tspan><tspan fill="{DIM}">{esc(M.use(what.ljust(13)))}</tspan>'
+             f'<tspan fill="{ORANGE_LT if res != "live" and not res.startswith("live") else MUTED}">{esc(M.use(res))}</tspan></text>']
+        body.append(f'<g class="out" style="animation-delay:{t:.2f}s">{"".join(g)}</g>')
+        t += 0.28
+        y += tlh
+    y += 6
+    summ = [("6 live, 0 down.", PAPER), ("  next deploy could be yours: ", DIM), ("wa.me/919518848804", ORANGE_LT)]
+    spans = "".join(f'<tspan fill="{c}">{esc(M.use(s))}</tspan>' for s, c in summ)
+    body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" style="animation-delay:{t:.2f}s">{spans}</text>')
+    t += 0.5
+    y += tlh + 6
+    body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" fill="{ORANGE_LT}" style="animation-delay:{t:.2f}s">{esc(M.use(prompt))}</text>')
+    body.append(f'<rect class="cur" x="{TX + tcw * len(prompt):.1f}" y="{y - 13}" width="8.5" height="17" fill="{ORANGE_LT}" style="animation-delay:{t:.2f}s"/>')
 
-    # now boarding
-    body.append(f'<line x1="{X}" y1="{yEnd}" x2="{W - X}" y2="{yEnd}" stroke="{LINE}"/>')
-    yb = yEnd + 24
-    pill = "NOW BOARDING"
-    pw = M.width(pill, 12, 1.6) + 42
-    body.append(f'<rect x="{X}" y="{yb}" width="{pw:.1f}" height="28" rx="4" fill="{ORANGE}"/>')
-    body.append(f'<circle class="lamp" cx="{X + 15}" cy="{yb + 14}" r="4.5" fill="{INK}"/>')
-    body.append(f'<text class="m" x="{X + 28}" y="{yb + 18.5}" font-size="12" letter-spacing="1.6" fill="{INK}" font-weight="700">{esc(M.use(pill))}</text>')
-    msg = "FREELANCE PROJECTS  ·  WHATSAPP +91 95188 48804"
-    body.append(f'<text class="m" x="{X + pw + 18:.1f}" y="{yb + 19}" font-size="14" letter-spacing="1.2" fill="{PAPER}">{esc(M.use(msg))}</text>')
-    body.append(f'<text class="m" x="{W - X}" y="{yb + 19}" font-size="13" letter-spacing="1" fill="{DIM}" text-anchor="end">{esc(M.use("anekkumar.in"))}</text>')
-    H = yb + 28 + 32
+    # status bar
+    SB = y + 26
+    H = SB + 28
+    body.append(f'<path d="M0 {SB}H{W}V{H - 14}a14 14 0 0 1-14 14H14a14 14 0 0 1-14-14Z" fill="{ORANGE}"/>')
+    sy = SB + 18.5
+    branch = (f'<g transform="translate(22 {SB + 7})" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linecap="round">'
+              '<circle cx="3" cy="2.5" r="2"/><circle cx="3" cy="11.5" r="2"/><circle cx="11" cy="4.5" r="2"/><path d="M3 4.5v5M11 6.5c0 3-8 2-8 3"/></g>')
+    body.append(branch)
+    left = "main    0 errors    6 deployments"
+    right = f"Ln {len(CODE)}, Col {len(''.join(s for _, s in CODE[-1])) + 1}    UTF-8    TypeScript    • available for freelance"
+    body.append(f'<text class="m" x="42" y="{sy}" font-size="12" fill="{INK}" font-weight="600">{esc(M.use(left))}</text>')
+    body.append(f'<text class="m" x="{W - 20}" y="{sy}" font-size="12" fill="{INK}" font-weight="600" text-anchor="end">{esc(M.use(right))}</text>')
 
-    frame = (f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="{INK}"/>'
-             f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="#fff" filter="url(#grain)" opacity=".045"/>'
-             f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="none" stroke="{LINE}"/>')
-    css = f'''
-.r{{animation-name:roll;animation-fill-mode:backwards}}
-.fl{{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);animation-name:fall;animation-timing-function:linear}}
-.lamp{{animation:blink 1.4s steps(1) infinite}}
-@keyframes roll{{from{{transform:translateY(0)}}}}
-@keyframes fall{{from{{transform:scaleY(1)}}}}
-@keyframes blink{{50%{{opacity:.15}}}}
-@media (prefers-reduced-motion:reduce){{.r,.fl,.lamp{{animation:none}}}}'''
-    route = ", ".join(f"{f} to {d.title()} ({s.lower()})" for f, d, _, s in FLIGHTS)
-    return svg(W, H, frame + f"<defs>{''.join(defs)}</defs>" + "\n".join(body), css,
-               "Departures: Anek Kumar, Full Stack Developer and Digital Marketer",
-               f"A split-flap departures board. Flights: {route}. Now boarding: freelance projects, WhatsApp +91 95188 48804.",
-               [B, M])
+    frame = (f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="{INK}"/>'
+             f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="#fff" filter="url(#grain)" opacity=".04"/>')
+    border = f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="none" stroke="{LINE}"/>'
+    css = '''
+.m{white-space:pre}
+.out{opacity:0;animation:fade .01s forwards}
+.cur{opacity:0;animation:blink 1s steps(1) infinite}
+@keyframes fade{to{opacity:1}}
+@keyframes blink{0%{opacity:1}50%{opacity:0}}'''
+    route = "; ".join(f"{d} ({w}): {r}" for d, w, r in DEPLOYS)
+    return svg(W, H, frame + f"<defs>{''.join(defs)}</defs>" + "\n".join(body) + border, css,
+               "anek.ts: Anek Kumar, Full Stack Developer and Digital Marketer",
+               "A code editor typing out Anek's profile (Python, Django, PHP, MySQL, React; SEO, Meta Ads, Google Ads, GA4; since 2023; open to freelance), "
+               f"then a terminal deploying six live projects: {route}. Next deploy could be yours: wa.me/919518848804.", [M])
 
 
 # ------------------------------------------------------------------ results
@@ -362,48 +382,6 @@ def proof():
                "Search Console impressions for shubharambhinfraadvisors.com rising from 3.43k to 1.22 million in six months.", [B, C, M])
 
 
-# ------------------------------------------------------------------ terminal
-def terminal():
-    W, H = 1000, 362
-    fs = 15
-    cw = M.width("x", fs)
-    body = [card(W, H)]
-    body.append(f'<text class="m" x="24" y="30" font-size="12.5" fill="{DIM}">{esc(M.use("anek@portfolio: ~"))}</text><line x1="0" y1="46" x2="{W}" y2="46" stroke="{LINE}"/>')
-    script = [
-        ("whoami", [[("o", "Anek Kumar · Full Stack Developer & Digital Marketer · Noida, India")]]),
-        ("cat stack.txt", [[("hl", "code    "), ("o", "Python · Django · PHP · MySQL · JavaScript · React · Node.js")],
-                           [("hl", "growth  "), ("o", "SEO · Meta Ads · Google Ads · Pixel + CAPI · GA4 · WhatsApp API")]]),
-        ("./results --live", [[("ok", "✔ #1 on Google · 17 keywords   ✔ 1.22M impressions   ✔ 1,149 leads")]]),
-        ("hire anek", [[("hl", "→ "), ("o", "wa.me/919518848804 · anekkumar9518@gmail.com · anekkumar.in")]]),
-    ]
-    defs, y, t = [], 84, 0.4
-    for i, (cmd, outs) in enumerate(script):
-        n = len(cmd)
-        dur = 0.07 * n
-        vals = ";".join(f"{cw * k:.1f}" for k in range(n + 1))
-        defs.append(f'<clipPath id="c{i}"><rect x="58" y="{y - 18}" height="26" width="0"><animate attributeName="width" begin="{t:.2f}s" dur="{dur:.2f}s" fill="freeze" calcMode="discrete" values="{vals}"/></rect></clipPath>')
-        body.append(f'<text class="m out" x="30" y="{y}" font-size="{fs}" fill="{ORANGE_LT}" style="animation-delay:{max(0, t - 0.3):.2f}s">❯</text>')
-        body.append(f'<text class="m" x="58" y="{y}" font-size="{fs}" fill="{PAPER}" clip-path="url(#c{i})">{esc(M.use(cmd))}</text>')
-        t += dur + 0.35
-        for line in outs:
-            y += 24
-            spans = "".join(f'<tspan class="{c}">{esc(M.use(txt))}</tspan>' for c, txt in line)
-            body.append(f'<text class="m out" x="58" y="{y}" font-size="{fs}" style="animation-delay:{t:.2f}s">{spans}</text>')
-            t += 0.12
-        y += 38
-        t += 0.45
-    body.insert(1, "<defs>" + "".join(defs) + "</defs>")
-    body.append(f'<rect class="cur" x="58" y="{y - 32}" width="9" height="18" fill="{ORANGE_LT}" style="animation-delay:{t:.2f}s"/>')
-    css = f'''
-.m{{white-space:pre}} .o{{fill:#c9c6bd}} .hl{{fill:#ffb08a}} .ok{{fill:{GREEN}}}
-.out{{opacity:0;animation:fade .01s forwards}}
-.cur{{opacity:0;animation:blink 1s steps(1) infinite}}
-@keyframes fade{{to{{opacity:1}}}}
-@keyframes blink{{0%{{opacity:1}}50%{{opacity:0}}}}'''
-    M.use("❯✔→")
-    return svg(W, H, "\n".join(body), css, "anek@portfolio terminal", "whoami, cat stack.txt, ./results --live, hire anek", [M])
-
-
 # ------------------------------------------------------------------ footer
 def footer():
     W, H = 1000, 280
@@ -427,7 +405,7 @@ def footer():
 
 if __name__ == "__main__":
     # build every card first so each font collects all characters, then write (faces are subset per file)
-    for name, fn in [("board", board), ("results", results), ("proof", proof), ("terminal", terminal), ("footer", footer)]:
+    for name, fn in [("editor", editor), ("results", results), ("proof", proof), ("footer", footer)]:
         B.chars.clear(); C.chars.clear(); M.chars.clear()
         out = fn()
         (OUT / f"{name}.svg").write_text(out, encoding="utf-8", newline="\n")
