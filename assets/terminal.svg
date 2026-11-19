@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-labelledby="t d">
+  <title id="t">anek@portfolio terminal</title>
+  <desc id="d">A terminal typing: whoami, cat stack.txt, ./results --live, hire anek.</desc>
+  <style>
+    text { font: 15px Consolas, Menlo, "DejaVu Sans Mono", "Courier New", monospace; fill: #d9f2df; white-space: pre; }
+    .p { fill: #ff8a5c; }
+    .o { fill: #c9c6bd; }
+    .ok { fill: #4be37a; }
+    .hl { fill: #ffb08a; }
+    .dim { fill: #7f7c74; }
+    .bar { font-size: 13px; fill: #a9a69d; }
+    .out { opacity: 0; animation: show .01s forwards; }
+    @keyframes show { to { opacity: 1; } }
+    .cur { fill: #ff8a5c; opacity: 0; animation: blink 1s steps(1) 7s infinite; }
+    @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+  </style>
+  <defs>
+    <!-- each command is revealed left to right, like typing -->
+    <clipPath id="c1"><rect x="56" y="64" height="24" width="0"><animate attributeName="width" from="0" to="90" begin="0.4s" dur="0.8s" fill="freeze" calcMode="discrete" values="0;12;24;36;48;60;72;90"/></rect></clipPath>
+    <clipPath id="c2"><rect x="56" y="126" height="24" width="0"><animate attributeName="width" begin="2.0s" dur="1.0s" fill="freeze" calcMode="discrete" values="0;14;28;42;56;70;84;98;112;126;140"/></rect></clipPath>
+    <clipPath id="c3"><rect x="56" y="210" height="24" width="0"><animate attributeName="width" begin="3.9s" dur="1.0s" fill="freeze" calcMode="discrete" values="0;14;28;42;56;70;84;98;112;126;140;154"/></rect></clipPath>
+    <clipPath id="c4"><rect x="56" y="272" height="24" width="0"><animate attributeName="width" begin="5.8s" dur="0.8s" fill="freeze" calcMode="discrete" values="0;12;24;36;48;60;72;90"/></rect></clipPath>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="999" height="329" rx="14" fill="#0c0c0b" stroke="#2b2a27"/>
+  <path d="M1 36h998" stroke="#2b2a27"/>
+  <rect x="0.5" y="0.5" width="999" height="36" rx="14" fill="#171715"/>
+  <rect x="0.5" y="20" width="999" height="16" fill="#171715"/>
+  <text class="bar" x="20" y="23">anek@portfolio: ~</text>
+  <text class="bar" x="980" y="23" text-anchor="end">bash</text>
+
+  <!-- 1. whoami -->
+  <text class="p" x="28" y="82">❯</text>
+  <text x="56" y="82" clip-path="url(#c1)">whoami</text>
+  <text class="o out" x="56" y="106" style="animation-delay:1.4s">Anek Kumar · Full Stack Developer &amp; Digital Marketer · Noida, India</text>
+
+  <!-- 2. cat stack.txt -->
+  <text class="p out" x="28" y="144" style="animation-delay:1.8s">❯</text>
+  <text x="56" y="144" clip-path="url(#c2)">cat stack.txt</text>
+  <text class="out" x="56" y="168" style="animation-delay:3.2s"><tspan class="hl">code</tspan><tspan class="o">     Python · Django · PHP · MySQL · JavaScript · React · Node.js</tspan></text>
+  <text class="out" x="56" y="190" style="animation-delay:3.3s"><tspan class="hl">growth</tspan><tspan class="o">   SEO · Meta Ads · Google Ads · Pixel + CAPI · GA4 · WhatsApp API</tspan></text>
+
+  <!-- 3. results, live -->
+  <text class="p out" x="28" y="228" style="animation-delay:3.7s">❯</text>
+  <text x="56" y="228" clip-path="url(#c3)">./results --live</text>
+  <text class="out" x="56" y="252" style="animation-delay:5.1s"><tspan class="ok">✔ #1 on Google for 17 keywords</tspan><tspan class="dim">   </tspan><tspan class="ok">✔ 1.22M impressions</tspan><tspan class="dim">   </tspan><tspan class="ok">✔ 1,149 leads @ ₹288</tspan></text>
+
+  <!-- 4. hire anek -->
+  <text class="p out" x="28" y="290" style="animation-delay:5.6s">❯</text>
+  <text x="56" y="290" clip-path="url(#c4)">hire anek</text>
+  <text class="out" x="56" y="314" style="animation-delay:6.8s"><tspan class="hl">→</tspan><tspan class="o"> wa.me/919518848804 · anekkumar9518@gmail.com · anekkumar.in</tspan></text>
+  <rect class="cur" x="566" y="300" width="9" height="18"/>
+</svg>
