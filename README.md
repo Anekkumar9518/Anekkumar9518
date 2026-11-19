@@ -1,4 +1,4 @@
-<a href="https://www.anekkumar.in"><img src="./assets/editor.svg" width="100%" alt="A code editor typing out anek.ts: Anek Kumar, Full Stack Developer and Digital Marketer at Shubharambh Infra Advisors; code: Python, Django, PHP, MySQL, React; growth: SEO, Meta Ads, Google Ads, GA4; since 2023; open to freelance. The terminal below runs npm run deploy and lists six live projects with results, including #1 on Google for 17 keywords and a 300+ module CRM." /></a>
+<a href="https://www.anekkumar.in"><img src="./assets/editor.svg" width="100%" alt="A code editor typing out anek.ts: Anek Kumar, Full Stack Developer and Digital Marketer at Shubharambh Infra Advisors; code: Python, Django, PHP, MySQL, React; growth: SEO, Meta Ads, Google Ads, GA4; since 2023; open to freelance. The terminal below runs npm run deploy and lists six live projects with results, including #1 on Google for 23 keywords and a 300+ module CRM." /></a>
 
 **I build websites, then I bring them customers.** Most businesses hire a developer for the website, then an agency for traffic. I do both: I write the code (Django, PHP, MySQL, React), then I run the SEO and the Meta ads that fill it with leads.
 Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Acres, Ryoto Electrix and Xaas Technologies.
@@ -7,7 +7,7 @@ Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Ac
 
 <br/>
 
-<img src="./assets/results.svg" width="100%" alt="1,149 Meta Ads leads drawn as 1,149 dots. #1 on Google for 17 keywords, 1.22M impressions in 6 months, 3.8K keywords ranking, 1 in 10 leads became a site meeting." />
+<img src="./assets/results.svg" width="100%" alt="1,149 Meta Ads leads drawn as 1,149 dots. #1 on Google for 23 keywords, 1.22M impressions in 6 months, 3.8K keywords ranking, 1 in 10 leads became a site meeting." />
 
 <br/>
 
@@ -18,15 +18,16 @@ Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Ac
 ### How the numbers happened
 
 <details>
-<summary><b>How Shubharambh got to #1 on Google for 17 keywords</b> &nbsp;<sub>click to open</sub></summary>
+<summary><b>How Shubharambh got to #1 on Google for 23 keywords</b> &nbsp;<sub>click to open</sub></summary>
 <br/>
 
-Six months of SEO on [shubharambhinfraadvisors.com](https://shubharambhinfraadvisors.com) took Google impressions from **3.43k to 1.22M** and clicks from **355 to 1.8k** (Google Search Console, Nov 2026).
+Six months of SEO on [shubharambhinfraadvisors.com](https://shubharambhinfraadvisors.com) took Google impressions from **3.43k to 1.22M** and clicks from **355 to 1.8k** (Google Search Console, Nov 2026). Rankings checked from Noida on 15 and 19 Nov 2026: 23 keywords at #1, 26 on page one.
 
-- **Local SEO.** Pages written for searches like "best property advisor in Noida". It ranks #1, above MoneyTree Realty, Propshop and Workians Realty.
+- **Local SEO.** Pages written for searches like "best property advisor in Noida" and "real estate consultant in Noida". Both rank #1, above MoneyTree Realty, Propshop and Wealth Clinic.
 - **Project pages and a blog.** Pages for the projects and the questions buyers actually search. "Finding High-ROI Properties with Market Metrics" ranks #1, above M3M India and Investopedia.
 - **Free property tools.** EMI, loan-eligibility and stamp-duty calculators, plus area and length converters that bring buyers in from search.
 - **Technical SEO.** Speed, schema, clean URLs, sitemaps and indexing.
+- **Guides Google quotes.** The Noida buyer's guide, "best builders in Noida" and "best areas to invest in Noida" pages rank #1 and are the top source in Google's AI Overview for those searches.
 
 Semrush now counts 3.8K keywords ranking (+19% this month) and 2.3K referring domains (its own estimates, 18 Nov 2026).
 
@@ -79,7 +80,7 @@ The CRM is an internal system, so there's no public link or screenshot.
     <td width="50%" valign="top">
       <a href="https://shubharambhinfraadvisors.com" title="PHP · MySQL · SEO · converter tools · Meta lead forms  |  Development, SEO and Meta Ads"><img src="./assets/projects/shubharambh.webp" alt="shubharambhinfraadvisors.com" title="PHP · MySQL · SEO · converter tools · Meta lead forms  |  Development, SEO and Meta Ads" /></a>
       <br/><sub><code>01</code></sub>&nbsp; <b>Shubharambh Infra Advisors</b><br/>
-      Real-estate advisory site I built and still run. Project search, EMI calculator, 25 area-unit converters. #1 on Google for 17 keywords.<br/>
+      Real-estate advisory site I built and still run. Project search, EMI calculator, 25 area-unit converters. #1 on Google for 23 keywords.<br/>
       <a href="https://shubharambhinfraadvisors.com">shubharambhinfraadvisors.com ↗</a>
     </td>
     <td width="50%" valign="top">
