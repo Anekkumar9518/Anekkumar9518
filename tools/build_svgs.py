@@ -125,7 +125,7 @@ CODE = [
     [("k", "await "), ("f", "anek"), ("p", "."), ("f", "healthcheck"), ("p", "();  "), ("c", "// live, runs daily ↓")],
 ]
 DEPLOYS = [  # domain, what I did, real result
-    ("shubharambhinfraadvisors.com", "site + seo", "#1 on Google for 52 keywords"),
+    ("shubharambhinfraadvisors.com", "site + seo", "#1 on Google for 55 keywords"),
     ("matrixacres.in", "crm + ads", "300+ module CRM"),
     ("visionwavetechnology.com", "website", "29 free tools"),
     ("lmcstore.in", "e-commerce", "ayurvedic e-commerce"),
@@ -343,7 +343,7 @@ def results():
     body.append(f'<text class="h note" x="{bx + 6}" y="{by + bh + 74}" font-size="28" fill="{ORANGE_LT}" transform="rotate(-3 {bx + 120} {by + bh + 70})">{esc(C.use("1,149 of them, at ₹288 each"))}</text>')
     # right: ledger
     rx, rw = 528, W - 528 - 44
-    rows = [("#1", "on Google for 52 keywords", '"best property advisor in noida"', True),
+    rows = [("#1", "on Google for 55 keywords", '"best property advisor in noida"', True),
             ("1.22M", "Google impressions in 6 months", "up from 3.43k · 355×", False),
             ("3.8K", "keywords ranking on Google", "from zero in five months", False),
             ("1 in 10", "leads became a site meeting", "≈ 115 meetings from 1,149 leads", False)]
@@ -375,7 +375,7 @@ def results():
 @keyframes draw{{to{{stroke-dashoffset:0}}}}
 @keyframes pulse{{0%,100%{{opacity:1;transform:scale(1)}}50%{{opacity:.35;transform:scale(.7)}}}}'''
     return svg(W, H, "\n".join(body), css, "Proof: real results by Anek Kumar",
-               "1,149 Meta Ads leads drawn as 1,149 dots. Number 1 on Google for 52 keywords, 1.22 million impressions in 6 months, 3,800 keywords ranking, 1 in 10 leads became a site meeting.", [B, C, M])
+               "1,149 Meta Ads leads drawn as 1,149 dots. Number 1 on Google for 55 keywords, 1.22 million impressions in 6 months, 3,800 keywords ranking, 1 in 10 leads became a site meeting.", [B, C, M])
 
 
 # ------------------------------------------------------------------ proof (real Search Console chart)
