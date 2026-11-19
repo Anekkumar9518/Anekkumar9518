@@ -121,6 +121,15 @@ The CRM is an internal system, so there's no public link or screenshot.
   </tr>
 </table>
 
+### Open source: AK Phone
+
+<a href="https://anekkumar9518.github.io/ak-phone/"><img src="https://raw.githubusercontent.com/Anekkumar9518/ak-phone/main/docs/hero.png" width="100%" alt="AK Phone, an Android-style phone simulator: home screen, Tools folder, Translate, Recorder and Paint." /></a>
+
+An Android-style phone that runs in a web page: 28 working apps and 9 games in plain HTML, CSS and JavaScript, with no framework and no build step. It has a live browser, voice assistant, recorder, translation, live currency rates, a QR scanner and a speed test.
+[Try it live](https://anekkumar9518.github.io/ak-phone/) · [Source](https://github.com/Anekkumar9518/ak-phone)
+
+<br/>
+
 Also: [AllFiles](https://allfiles.space), a private cloud with free tools, and [Echo Reminder](https://github.com/Anekkumar9518/echo-reminder), voice reminders with smart repeats.
 
 <br/>
