@@ -11,6 +11,8 @@ Fonts: Bricolage Grotesque, Caveat, Geist Mono (SIL Open Font License).
 """
 import base64
 import io
+import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from fontTools import subset
@@ -105,7 +107,8 @@ CIRCLE = "M150 14C112 2 46 6 20 32 0 54 14 86 64 98c48 11 112 4 128-26 14-26-16-
 
 # ------------------------------------------------------------------ editor
 # The hero: a code editor. The profile is typed out as a TypeScript object,
-# then the terminal below "deploys" the six live projects, each with its
+# then the terminal below shows a real health check of the six live sites
+# (data/status.json, refreshed daily by GitHub Actions) next to each one's
 # real result. Typing uses SMIL clip widths, so it runs inside an <img>.
 KW, STR, NUM, KEY, PUN, FN, COM = ORANGE_LT, "#e3c98f", GREEN, "#ece9e1", "#8d8a82", "#ffb08a", "#6f6c65"
 CODE = [
@@ -119,17 +122,32 @@ CODE = [
     [("y", "  openTo"), ("p", ": "), ("s", '"freelance"'), ("p", ",")],
     [("p", "};")],
     [],
-    [("k", "await "), ("f", "anek"), ("p", "."), ("f", "deploy"), ("p", "();  "), ("c", "// see terminal ↓")],
+    [("k", "await "), ("f", "anek"), ("p", "."), ("f", "healthcheck"), ("p", "();  "), ("c", "// live, runs daily ↓")],
 ]
 DEPLOYS = [  # domain, what I did, real result
     ("shubharambhinfraadvisors.com", "site + seo", "#1 on Google for 17 keywords"),
     ("matrixacres.in", "crm + ads", "300+ module CRM"),
     ("visionwavetechnology.com", "website", "29 free tools"),
-    ("lmcstore.in", "e-commerce", "live"),
-    ("harisabziwala.com", "site + app", "live, with rider app"),
-    ("ezzycommerce.store", "e-commerce", "live"),
+    ("lmcstore.in", "e-commerce", "ayurvedic e-commerce"),
+    ("harisabziwala.com", "site + app", "grocery site + rider app"),
+    ("ezzycommerce.store", "e-commerce", "streetwear e-commerce"),
 ]
 TOK = {"c": COM, "k": KW, "f": FN, "p": PUN, "y": KEY, "s": STR, "n": NUM}
+
+
+RED = "#ff6b5b"
+
+
+def load_status():
+    """Real health check from data/status.json: ({host: site}, 'DD Mon YYYY, HH:MM IST')."""
+    data = json.loads((ROOT / "data" / "status.json").read_text(encoding="utf-8"))
+    when = datetime.strptime(data["checked"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    ist = when.astimezone(timezone(timedelta(hours=5, minutes=30)))
+    return {x["host"]: x for x in data["sites"]}, ist.strftime("%d %b %Y, %H:%M IST").lstrip("0")
+
+
+def cross(x, y):
+    return f'<path d="M{x + 1} {y - 10}l8 8M{x + 9} {y - 10}l-8 8" fill="none" stroke="{RED}" stroke-width="2" stroke-linecap="round"/>'
 
 
 def check(x, y):
@@ -210,7 +228,8 @@ def editor():
     TX = 30
     y = PY + 66
     prompt = "anek@noida ~/work $ "
-    cmd = "npm run deploy -- --all"
+    cmd = "npm run healthcheck"
+    status, checked = load_status()
     body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" style="animation-delay:{t:.2f}s"><tspan fill="{ORANGE_LT}">{esc(M.use(prompt))}</tspan></text>')
     cx = TX + tcw * len(prompt)
     t += 0.3
@@ -218,15 +237,27 @@ def editor():
     body.append(f'<text class="m" x="{cx:.1f}" y="{y}" font-size="{tfs}" fill="{PAPER}" clip-path="url(#tcmd)">{esc(M.use(cmd))}</text>')
     t += 0.5
     y += tlh + 6
+    up = 0
     for dom, what, res in DEPLOYS:
-        g = [check(TX + 1, y), f'<text class="m" x="{TX + 22}" y="{y}" font-size="{tfs}">'
-             f'<tspan fill="{PAPER}">{esc(M.use(dom.ljust(30)))}</tspan><tspan fill="{DIM}">{esc(M.use(what.ljust(13)))}</tspan>'
-             f'<tspan fill="{ORANGE_LT if res != "live" and not res.startswith("live") else MUTED}">{esc(M.use(res))}</tspan></text>']
+        st = status.get(dom, {"up": False, "code": None, "ms": 0})
+        up += st["up"]
+        code = f'{st["code"]} OK' if st["up"] else (f'{st["code"]}' if st["code"] else "no reply")
+        ms = f'{st["ms"]}ms' if st["up"] else ""
+        g = [check(TX + 1, y) if st["up"] else cross(TX + 1, y), f'<text class="m" x="{TX + 22}" y="{y}" font-size="{tfs}">'
+             f'<tspan fill="{PAPER}">{esc(M.use(dom.ljust(30)))}</tspan><tspan fill="{GREEN if st["up"] else RED}">{esc(M.use(code.ljust(9)))}</tspan>'
+             f'<tspan fill="{DIM}">{esc(M.use(ms.rjust(6)))}   </tspan>'
+             f'<tspan fill="{ORANGE_LT if any(ch.isdigit() for ch in res) else MUTED}">{esc(M.use(res))}</tspan></text>']
         body.append(f'<g class="out" style="animation-delay:{t:.2f}s">{"".join(g)}</g>')
         t += 0.28
         y += tlh
     y += 6
-    summ = [("6 live, 0 down.", PAPER), ("  next deploy could be yours: ", DIM), ("wa.me/919518848804", ORANGE_LT)]
+    down = len(DEPLOYS) - up
+    summ = [(f"{up} up, {down} down.", PAPER), (f"  checked {checked} · runs daily on GitHub Actions", DIM)]
+    spans = "".join(f'<tspan fill="{c}">{esc(M.use(s))}</tspan>' for s, c in summ)
+    body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" style="animation-delay:{t:.2f}s">{spans}</text>')
+    t += 0.4
+    y += tlh
+    summ = [("next site could be yours: ", DIM), ("wa.me/919518848804", ORANGE_LT)]
     spans = "".join(f'<tspan fill="{c}">{esc(M.use(s))}</tspan>' for s, c in summ)
     body.append(f'<text class="m out" x="{TX}" y="{y}" font-size="{tfs}" style="animation-delay:{t:.2f}s">{spans}</text>')
     t += 0.5
@@ -242,7 +273,7 @@ def editor():
     branch = (f'<g transform="translate(22 {SB + 7})" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linecap="round">'
               '<circle cx="3" cy="2.5" r="2"/><circle cx="3" cy="11.5" r="2"/><circle cx="11" cy="4.5" r="2"/><path d="M3 4.5v5M11 6.5c0 3-8 2-8 3"/></g>')
     body.append(branch)
-    left = "main    0 errors    6 deployments"
+    left = f"main    0 errors    {up}/{len(DEPLOYS)} sites up"
     right = f"Ln {len(CODE)}, Col {len(''.join(s for _, s in CODE[-1])) + 1}    UTF-8    TypeScript    • available for freelance"
     body.append(f'<text class="m" x="42" y="{sy}" font-size="12" fill="{INK}" font-weight="600">{esc(M.use(left))}</text>')
     body.append(f'<text class="m" x="{W - 20}" y="{sy}" font-size="12" fill="{INK}" font-weight="600" text-anchor="end">{esc(M.use(right))}</text>')
@@ -256,11 +287,11 @@ def editor():
 .cur{opacity:0;animation:blink 1s steps(1) infinite}
 @keyframes fade{to{opacity:1}}
 @keyframes blink{0%{opacity:1}50%{opacity:0}}'''
-    route = "; ".join(f"{d} ({w}): {r}" for d, w, r in DEPLOYS)
+    route = "; ".join(f"{d}: {'up' if status.get(d, {}).get('up') else 'down'}, {r}" for d, w, r in DEPLOYS)
     return svg(W, H, frame + f"<defs>{''.join(defs)}</defs>" + "\n".join(body) + border, css,
                "anek.ts: Anek Kumar, Full Stack Developer and Digital Marketer",
                "A code editor typing out Anek's profile (Python, Django, PHP, MySQL, React; SEO, Meta Ads, Google Ads, GA4; since 2023; open to freelance), "
-               f"then a terminal deploying six live projects: {route}. Next deploy could be yours: wa.me/919518848804.", [M])
+               f"then a terminal with a live health check of six sites ({up} up, checked {checked}): {route}. Next site could be yours: wa.me/919518848804.", [M])
 
 
 # ------------------------------------------------------------------ results

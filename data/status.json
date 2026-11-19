@@ -1,0 +1,47 @@
+{
+  "checked": "2026-11-19T06:34:48Z",
+  "sites": [
+    {
+      "host": "shubharambhinfraadvisors.com",
+      "url": "https://shubharambhinfraadvisors.com/",
+      "code": 200,
+      "ms": 291,
+      "up": true
+    },
+    {
+      "host": "matrixacres.in",
+      "url": "https://www.matrixacres.in/",
+      "code": 200,
+      "ms": 325,
+      "up": true
+    },
+    {
+      "host": "visionwavetechnology.com",
+      "url": "https://visionwavetechnology.com/",
+      "code": 200,
+      "ms": 155,
+      "up": true
+    },
+    {
+      "host": "lmcstore.in",
+      "url": "https://lmcstore.in/",
+      "code": 200,
+      "ms": 139,
+      "up": true
+    },
+    {
+      "host": "harisabziwala.com",
+      "url": "https://harisabziwala.com/",
+      "code": 200,
+      "ms": 114,
+      "up": true
+    },
+    {
+      "host": "ezzycommerce.store",
+      "url": "https://ezzycommerce.store/",
+      "code": 200,
+      "ms": 286,
+      "up": true
+    }
+  ]
+}
