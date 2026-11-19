@@ -121,12 +121,17 @@ The CRM is an internal system, so there's no public link or screenshot.
   </tr>
 </table>
 
-### Open source: AK Phone
+### Open source
 
 <a href="https://anekkumar9518.github.io/ak-phone/"><img src="https://raw.githubusercontent.com/Anekkumar9518/ak-phone/main/docs/hero.png" width="100%" alt="AK Phone, an Android-style phone simulator: home screen, Tools folder, Translate, Recorder and Paint." /></a>
 
-An Android-style phone that runs in a web page: 28 working apps and 9 games in plain HTML, CSS and JavaScript, with no framework and no build step. It has a live browser, voice assistant, recorder, translation, live currency rates, a QR scanner and a speed test.
+**AK Phone** is an Android-style phone that runs in a web page: 28 working apps and 9 games in plain HTML, CSS and JavaScript, with no framework and no build step. It has a live browser, voice assistant, recorder, translation, live currency rates, a QR scanner and a speed test.
 [Try it live](https://anekkumar9518.github.io/ak-phone/) · [Source](https://github.com/Anekkumar9518/ak-phone)
+
+<a href="https://github.com/Anekkumar9518/devtab"><img src="https://raw.githubusercontent.com/Anekkumar9518/devtab/main/docs/hacker.png" width="100%" alt="DevTab in Hacker mode: Matrix rain, a glitching green clock and a terminal-style search box." /></a>
+
+**DevTab** is a new tab for Chrome with two looks, Developer and Hacker. It has animated 4K backgrounds or your own video, search shortcuts (`g react` searches GitHub), most-visited sites, to-dos and weather. It's a Manifest V3 extension with no tracking.
+[Try the demo](https://anekkumar9518.github.io/devtab/) · [Install](https://github.com/Anekkumar9518/devtab/releases/latest) · [Source](https://github.com/Anekkumar9518/devtab)
 
 <br/>
 
