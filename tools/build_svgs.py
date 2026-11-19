@@ -244,8 +244,8 @@ def editor():
         code = f'{st["code"]} OK' if st["up"] else (f'{st["code"]}' if st["code"] else "no reply")
         ms = f'{st["ms"]}ms' if st["up"] else ""
         g = [check(TX + 1, y) if st["up"] else cross(TX + 1, y), f'<text class="m" x="{TX + 22}" y="{y}" font-size="{tfs}">'
-             f'<tspan fill="{PAPER}">{esc(M.use(dom.ljust(30)))}</tspan><tspan fill="{GREEN if st["up"] else RED}">{esc(M.use(code.ljust(9)))}</tspan>'
-             f'<tspan fill="{DIM}">{esc(M.use(ms.rjust(6)))}   </tspan>'
+             f'<tspan fill="{PAPER}">{esc(M.use(dom.ljust(30)))}</tspan><tspan fill="{GREEN if st["up"] else RED}">{esc(M.use(code.ljust(8)))}</tspan>'
+             f'<tspan fill="{DIM}">{esc(M.use(ms.rjust(7)))}   </tspan>'
              f'<tspan fill="{ORANGE_LT if any(ch.isdigit() for ch in res) else MUTED}">{esc(M.use(res))}</tspan></text>']
         body.append(f'<g class="out" style="animation-delay:{t:.2f}s">{"".join(g)}</g>')
         t += 0.28
