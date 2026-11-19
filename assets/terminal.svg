@@ -1,53 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-labelledby="t d">
-  <title id="t">anek@portfolio terminal</title>
-  <desc id="d">A terminal typing: whoami, cat stack.txt, ./results --live, hire anek.</desc>
-  <style>
-    text { font: 15px Consolas, Menlo, "DejaVu Sans Mono", "Courier New", monospace; fill: #d9f2df; white-space: pre; }
-    .p { fill: #ff8a5c; }
-    .o { fill: #c9c6bd; }
-    .ok { fill: #4be37a; }
-    .hl { fill: #ffb08a; }
-    .dim { fill: #7f7c74; }
-    .bar { font-size: 13px; fill: #a9a69d; }
-    .out { opacity: 0; animation: show .01s forwards; }
-    @keyframes show { to { opacity: 1; } }
-    .cur { fill: #ff8a5c; opacity: 0; animation: blink 1s steps(1) 7s infinite; }
-    @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
-  </style>
-  <defs>
-    <!-- each command is revealed left to right, like typing -->
-    <clipPath id="c1"><rect x="56" y="64" height="24" width="0"><animate attributeName="width" from="0" to="90" begin="0.4s" dur="0.8s" fill="freeze" calcMode="discrete" values="0;12;24;36;48;60;72;90"/></rect></clipPath>
-    <clipPath id="c2"><rect x="56" y="126" height="24" width="0"><animate attributeName="width" begin="2.0s" dur="1.0s" fill="freeze" calcMode="discrete" values="0;14;28;42;56;70;84;98;112;126;140"/></rect></clipPath>
-    <clipPath id="c3"><rect x="56" y="210" height="24" width="0"><animate attributeName="width" begin="3.9s" dur="1.0s" fill="freeze" calcMode="discrete" values="0;14;28;42;56;70;84;98;112;126;140;154"/></rect></clipPath>
-    <clipPath id="c4"><rect x="56" y="272" height="24" width="0"><animate attributeName="width" begin="5.8s" dur="0.8s" fill="freeze" calcMode="discrete" values="0;12;24;36;48;60;72;90"/></rect></clipPath>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="362" viewBox="0 0 1000 362" role="img" aria-labelledby="t d">
+<title id="t">anek@portfolio terminal</title><desc id="d">whoami, cat stack.txt, ./results --live, hire anek</desc>
+<defs><filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+<style>@font-face{font-family:'Mono';src:url(data:font/woff2;base64,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) format('woff2');}
+.b{font-family:'Bric',"Segoe UI", -apple-system, Helvetica, Arial, sans-serif;font-weight:800}
+.m{font-family:'Mono',Consolas,Menlo,monospace;font-weight:500}
+.h{font-family:'Hand','Segoe Print','Comic Sans MS',cursive;font-weight:700}
 
-  <rect x="0.5" y="0.5" width="999" height="329" rx="14" fill="#0c0c0b" stroke="#2b2a27"/>
-  <path d="M1 36h998" stroke="#2b2a27"/>
-  <rect x="0.5" y="0.5" width="999" height="36" rx="14" fill="#171715"/>
-  <rect x="0.5" y="20" width="999" height="16" fill="#171715"/>
-  <text class="bar" x="20" y="23">anek@portfolio: ~</text>
-  <text class="bar" x="980" y="23" text-anchor="end">bash</text>
-
-  <!-- 1. whoami -->
-  <text class="p" x="28" y="82">❯</text>
-  <text x="56" y="82" clip-path="url(#c1)">whoami</text>
-  <text class="o out" x="56" y="106" style="animation-delay:1.4s">Anek Kumar · Full Stack Developer &amp; Digital Marketer · Noida, India</text>
-
-  <!-- 2. cat stack.txt -->
-  <text class="p out" x="28" y="144" style="animation-delay:1.8s">❯</text>
-  <text x="56" y="144" clip-path="url(#c2)">cat stack.txt</text>
-  <text class="out" x="56" y="168" style="animation-delay:3.2s"><tspan class="hl">code</tspan><tspan class="o">     Python · Django · PHP · MySQL · JavaScript · React · Node.js</tspan></text>
-  <text class="out" x="56" y="190" style="animation-delay:3.3s"><tspan class="hl">growth</tspan><tspan class="o">   SEO · Meta Ads · Google Ads · Pixel + CAPI · GA4 · WhatsApp API</tspan></text>
-
-  <!-- 3. results, live -->
-  <text class="p out" x="28" y="228" style="animation-delay:3.7s">❯</text>
-  <text x="56" y="228" clip-path="url(#c3)">./results --live</text>
-  <text class="out" x="56" y="252" style="animation-delay:5.1s"><tspan class="ok">✔ #1 on Google for 17 keywords</tspan><tspan class="dim">   </tspan><tspan class="ok">✔ 1.22M impressions</tspan><tspan class="dim">   </tspan><tspan class="ok">✔ 1,149 leads @ ₹288</tspan></text>
-
-  <!-- 4. hire anek -->
-  <text class="p out" x="28" y="290" style="animation-delay:5.6s">❯</text>
-  <text x="56" y="290" clip-path="url(#c4)">hire anek</text>
-  <text class="out" x="56" y="314" style="animation-delay:6.8s"><tspan class="hl">→</tspan><tspan class="o"> wa.me/919518848804 · anekkumar9518@gmail.com · anekkumar.in</tspan></text>
-  <rect class="cur" x="566" y="300" width="9" height="18"/>
+.m{white-space:pre} .o{fill:#c9c6bd} .hl{fill:#ffb08a} .ok{fill:#4be37a}
+.out{opacity:0;animation:fade .01s forwards}
+.cur{opacity:0;animation:blink 1s steps(1) infinite}
+@keyframes fade{to{opacity:1}}
+@keyframes blink{0%{opacity:1}50%{opacity:0}}</style>
+<rect x=".5" y=".5" width="999" height="361" rx="20" fill="#0d0d0c"/><rect x=".5" y=".5" width="999" height="361" rx="20" fill="#fff" filter="url(#grain)" opacity=".05"/><rect x=".5" y=".5" width="999" height="361" rx="20" fill="none" stroke="#2b2a27"/>
+<defs><clipPath id="c0"><rect x="58" y="66" height="26" width="0"><animate attributeName="width" begin="0.40s" dur="0.42s" fill="freeze" calcMode="discrete" values="0.0;9.0;18.0;27.0;36.0;45.0;54.0"/></rect></clipPath><clipPath id="c1"><rect x="58" y="128" height="26" width="0"><animate attributeName="width" begin="1.74s" dur="0.91s" fill="freeze" calcMode="discrete" values="0.0;9.0;18.0;27.0;36.0;45.0;54.0;63.0;72.0;81.0;90.0;99.0;108.0;117.0"/></rect></clipPath><clipPath id="c2"><rect x="58" y="214" height="26" width="0"><animate attributeName="width" begin="3.69s" dur="1.12s" fill="freeze" calcMode="discrete" values="0.0;9.0;18.0;27.0;36.0;45.0;54.0;63.0;72.0;81.0;90.0;99.0;108.0;117.0;126.0;135.0;144.0"/></rect></clipPath><clipPath id="c3"><rect x="58" y="276" height="26" width="0"><animate attributeName="width" begin="5.73s" dur="0.63s" fill="freeze" calcMode="discrete" values="0.0;9.0;18.0;27.0;36.0;45.0;54.0;63.0;72.0;81.0"/></rect></clipPath></defs>
+<text class="m" x="24" y="30" font-size="12.5" fill="#7f7c74">anek@portfolio: ~</text><line x1="0" y1="46" x2="1000" y2="46" stroke="#2b2a27"/>
+<text class="m out" x="30" y="84" font-size="15" fill="#ff8a5c" style="animation-delay:0.10s">❯</text>
+<text class="m" x="58" y="84" font-size="15" fill="#f1f0ec" clip-path="url(#c0)">whoami</text>
+<text class="m out" x="58" y="108" font-size="15" style="animation-delay:1.17s"><tspan class="o">Anek Kumar · Full Stack Developer &amp; Digital Marketer · Noida, India</tspan></text>
+<text class="m out" x="30" y="146" font-size="15" fill="#ff8a5c" style="animation-delay:1.44s">❯</text>
+<text class="m" x="58" y="146" font-size="15" fill="#f1f0ec" clip-path="url(#c1)">cat stack.txt</text>
+<text class="m out" x="58" y="170" font-size="15" style="animation-delay:3.00s"><tspan class="hl">code    </tspan><tspan class="o">Python · Django · PHP · MySQL · JavaScript · React · Node.js</tspan></text>
+<text class="m out" x="58" y="194" font-size="15" style="animation-delay:3.12s"><tspan class="hl">growth  </tspan><tspan class="o">SEO · Meta Ads · Google Ads · Pixel + CAPI · GA4 · WhatsApp API</tspan></text>
+<text class="m out" x="30" y="232" font-size="15" fill="#ff8a5c" style="animation-delay:3.39s">❯</text>
+<text class="m" x="58" y="232" font-size="15" fill="#f1f0ec" clip-path="url(#c2)">./results --live</text>
+<text class="m out" x="58" y="256" font-size="15" style="animation-delay:5.16s"><tspan class="ok">✔ #1 on Google · 17 keywords   ✔ 1.22M impressions   ✔ 1,149 leads</tspan></text>
+<text class="m out" x="30" y="294" font-size="15" fill="#ff8a5c" style="animation-delay:5.43s">❯</text>
+<text class="m" x="58" y="294" font-size="15" fill="#f1f0ec" clip-path="url(#c3)">hire anek</text>
+<text class="m out" x="58" y="318" font-size="15" style="animation-delay:6.71s"><tspan class="hl">→ </tspan><tspan class="o">wa.me/919518848804 · anekkumar9518@gmail.com · anekkumar.in</tspan></text>
+<rect class="cur" x="58" y="324" width="9" height="18" fill="#ff8a5c" style="animation-delay:7.28s"/>
 </svg>
