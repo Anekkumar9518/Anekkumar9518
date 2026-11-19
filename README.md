@@ -1,6 +1,6 @@
-<a href="https://www.anekkumar.in"><img src="./assets/hero.svg" width="100%" alt="Anek Kumar. I build websites, then I bring them customers. Full Stack Developer and Digital Marketer, Noida, India." /></a>
+<a href="https://www.anekkumar.in"><img src="./assets/board.svg" width="100%" alt="Departures board for Anek Kumar, Full Stack Developer and Digital Marketer. Six live projects listed as flights AK101 to AK106: Shubharambh (site and SEO, #1 for 17 keywords), Matrix Acres (CRM and ads, 300+ modules), Visionwave (website, 29 tools), LMC Store, Hari Sabzi and EzzyCommerce. Now boarding: freelance projects, WhatsApp +91 95188 48804." /></a>
 
-Most businesses hire a developer for the website, then an agency for traffic. I do both: I write the code (Django, PHP, MySQL, React), then I run the SEO and the Meta ads that fill it with leads.
+**I build websites, then I bring them customers.** Most businesses hire a developer for the website, then an agency for traffic. I do both: I write the code (Django, PHP, MySQL, React), then I run the SEO and the Meta ads that fill it with leads.
 Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Acres, Ryoto Electrix and Xaas Technologies.
 
 [Portfolio](https://www.anekkumar.in) &nbsp;·&nbsp; [WhatsApp](https://wa.me/919518848804?text=Hi%20Anek%2C%20I%20saw%20your%20GitHub) &nbsp;·&nbsp; [anekkumar9518@gmail.com](mailto:anekkumar9518@gmail.com) &nbsp;·&nbsp; [CV](https://www.anekkumar.in/assets/cv/Anek-Kumar-CV.pdf)
@@ -15,19 +15,19 @@ Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Ac
 
 <br/>
 
-### Work that's live right now
+### The flights, up close
 
 <table>
   <tr>
     <td width="50%" valign="top">
       <a href="https://shubharambhinfraadvisors.com"><img src="./assets/projects/shubharambh.webp" alt="shubharambhinfraadvisors.com" /></a>
-      <br/><sub><code>01</code></sub>&nbsp; <b>Shubharambh Infra Advisors</b><br/>
+      <br/><sub><code>AK101</code></sub>&nbsp; <b>Shubharambh Infra Advisors</b><br/>
       Real-estate advisory site I built and still run. Project search, EMI calculator, 25 area-unit converters. #1 on Google for 17 keywords.<br/>
       <a href="https://shubharambhinfraadvisors.com">shubharambhinfraadvisors.com ↗</a>
     </td>
     <td width="50%" valign="top">
       <a href="https://www.matrixacres.in"><img src="./assets/projects/matrixacres.webp" alt="matrixacres.in" /></a>
-      <br/><sub><code>02</code></sub>&nbsp; <b>Matrix Acres</b><br/>
+      <br/><sub><code>AK102</code></sub>&nbsp; <b>Matrix Acres</b><br/>
       The website, plus a 300+ module CRM behind it (leads, dashboards, roles) and the Meta and Google campaigns that fed it.<br/>
       <a href="https://www.matrixacres.in">matrixacres.in ↗</a>
     </td>
@@ -35,13 +35,13 @@ Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Ac
   <tr>
     <td width="50%" valign="top">
       <a href="https://visionwavetechnology.com"><img src="./assets/projects/visionwave.webp" alt="visionwavetechnology.com" /></a>
-      <br/><sub><code>03</code></sub>&nbsp; <b>Visionwave Technology</b><br/>
+      <br/><sub><code>AK103</code></sub>&nbsp; <b>Visionwave Technology</b><br/>
       Agency website with 29 free tools.<br/>
       <a href="https://visionwavetechnology.com">visionwavetechnology.com ↗</a>
     </td>
     <td width="50%" valign="top">
       <a href="https://lmcstore.in"><img src="./assets/projects/lmc.webp" alt="lmcstore.in" /></a>
-      <br/><sub><code>04</code></sub>&nbsp; <b>LMC Healthcare Store</b><br/>
+      <br/><sub><code>AK104</code></sub>&nbsp; <b>LMC Healthcare Store</b><br/>
       Ayurvedic wellness e-commerce.<br/>
       <a href="https://lmcstore.in">lmcstore.in ↗</a>
     </td>
@@ -49,13 +49,13 @@ Right now that's **Shubharambh Infra Advisors** in Noida. Before that, Matrix Ac
   <tr>
     <td width="50%" valign="top">
       <a href="https://harisabziwala.com"><img src="./assets/projects/harisabzi.webp" alt="harisabziwala.com" /></a>
-      <br/><sub><code>05</code></sub>&nbsp; <b>Hari Sabzi Wala</b><br/>
+      <br/><sub><code>AK105</code></sub>&nbsp; <b>Hari Sabzi Wala</b><br/>
       Grocery delivery website with a rider app.<br/>
       <a href="https://harisabziwala.com">harisabziwala.com ↗</a>
     </td>
     <td width="50%" valign="top">
       <a href="https://ezzycommerce.store"><img src="./assets/projects/ezzy.webp" alt="ezzycommerce.store" /></a>
-      <br/><sub><code>06</code></sub>&nbsp; <b>EzzyCommerce</b><br/>
+      <br/><sub><code>AK106</code></sub>&nbsp; <b>EzzyCommerce</b><br/>
       Streetwear fashion e-commerce.<br/>
       <a href="https://ezzycommerce.store">ezzycommerce.store ↗</a>
     </td>

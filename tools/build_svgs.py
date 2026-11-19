@@ -103,69 +103,144 @@ ARROW = '<path d="M8 12c26-6 58 2 76 22s20 34 18 48"/><path d="M88 70l14 14 10-1
 CIRCLE = "M150 14C112 2 46 6 20 32 0 54 14 86 64 98c48 11 112 4 128-26 14-26-16-52-74-58-30-3-56 2-80 12"
 
 
-# ------------------------------------------------------------------ hero
-def hero():
-    W, H, X = 1000, 540, 48
-    lines = ["I build websites,", "then I bring them", "customers."]
-    ls = -3.2
-    size = 92
-    while max(B.width(l, size, ls) for l in lines) > 610:
-        size -= 2
-    lh = size * 0.98
-    y0 = 128 + size * 0.8
-    strip = ["ANEK KUMAR", "FULL STACK DEVELOPER & DIGITAL MARKETER", "NOIDA, IN"]
-    for s in strip:
-        M.use(s)
-    body = [card(W, H)]
-    # top fact strip with hairlines
-    body.append(f'<line x1="{X}" y1="34" x2="{W - X}" y2="34" stroke="{LINE}"/><line x1="{X}" y1="78" x2="{W - X}" y2="78" stroke="{LINE}"/>')
-    x = X
-    for i, s in enumerate(strip):
-        anchor = "end" if i == 2 else "start"
-        tx = W - X if i == 2 else x
-        body.append(f'<text class="m strip" x="{tx}" y="61" text-anchor="{anchor}">{esc(s)}</text>')
-        if i < 2:
-            x += M.width(s, 13, 1.3) + 22
-            body.append(f'<line x1="{x - 11}" y1="48" x2="{x - 11}" y2="64" stroke="{LINE}"/>')
-    # headline, word by word
-    for li, line in enumerate(lines):
-        y = y0 + li * lh
-        if li == 2:
-            wv = B.width(line, size, ls)
-            body.append(f'<rect class="marker" x="{X - 6}" y="{y - size * 0.34:.1f}" width="{wv + 14:.1f}" height="{size * 0.36:.1f}" rx="5" fill="{ORANGE}"/>')
-        body.append(f'<text class="b head w{li}" x="{X}" y="{y:.1f}" style="font-size:{size}px;letter-spacing:{ls}px">{esc(B.use(line))}</text>')
-    # hand note + arrow on the right
-    nx = 700
-    body.append(f'<g class="note" transform="rotate(-5 {nx + 80} 210)"><text class="h" x="{nx}" y="196" font-size="31" fill="{ORANGE_LT}">{esc(C.use("every number here is"))}</text>'
-                f'<text class="h" x="{nx + 6}" y="230" font-size="31" fill="{ORANGE_LT}">{esc(C.use("real. scroll down."))}</text></g>')
-    body.append(f'<g class="arrow" transform="translate({nx + 150} 246) scale(1.15) rotate(18)" fill="none" stroke="{ORANGE_LT}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">{ARROW}</g>')
-    # bottom fact row
-    facts = [("now", "Shubharambh Infra Advisors"), ("since", "2023 · 3+ years, 4 companies"), ("open to", "freelance projects")]
-    yb = H - 46
-    body.append(f'<line x1="{X}" y1="{yb - 36}" x2="{W - X}" y2="{yb - 36}" stroke="{LINE}"/>')
-    x = X
-    for i, (k, v) in enumerate(facts):
-        body.append(f'<text class="m" x="{x}" y="{yb}" font-size="13" fill="{DIM}">{esc(M.use(k))}</text>')
-        kx = x + M.width(k, 13) + 10
-        body.append(f'<text class="b" x="{kx}" y="{yb + 1}" font-size="18" fill="{PAPER}" letter-spacing="-.3">{esc(B.use(v))}</text>')
-        x = kx + B.width(v, 18, -0.3) + 34
-    body.append(f'<circle class="pulse" cx="{W - X - 6}" cy="{yb - 6}" r="5" fill="{GREEN}"/>')
+# ------------------------------------------------------------------ board
+# A split-flap departures board. Each letter is a flap cell that rolls
+# through the alphabet until it lands, so the board settles left to right.
+# The flights are real live projects; the status column is a real result.
+FLAP_ALPHA = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#+&.,-/"
+FLAP_STEP = 0.038
+FLAP = {  # cell width, height, gap, font size
+    "L": (50, 72, 5, 50),
+    "M": (24, 36, 3, 24),
+    "S": (20, 30, 2.5, 19),
+}
+BOARD_BG, CELL, CELL_TOP = "#070706", "#1a1a18", "#21211f"
+FLIGHTS = [  # flight, destination, service, status
+    ("AK101", "SHUBHARAMBH", "SITE+SEO", "#1 FOR 17"),
+    ("AK102", "MATRIX ACRES", "CRM+ADS", "300+ MODS"),
+    ("AK103", "VISIONWAVE", "WEBSITE", "29 TOOLS"),
+    ("AK104", "LMC STORE", "E-COM", "LIVE"),
+    ("AK105", "HARI SABZI", "SITE+APP", "LIVE"),
+    ("AK106", "EZZYCOMMERCE", "E-COM", "LIVE"),
+]
+
+
+def board():
+    W, X = 1000, 40
+    inner = W - 2 * X
+    defs, body, used = [], [], set()
+
+    def strip(key, color, cid):
+        w, h, _, fs = FLAP[key]
+        base = h / 2 + fs * 0.36
+        spans = "".join(f'<tspan x="{w / 2}" y="{i * h + base:.1f}">{esc(B.use(ch))}</tspan>'
+                        for i, ch in enumerate(FLAP_ALPHA) if ch != " ")
+        defs.append(f'<text id="s{cid}" class="b" text-anchor="middle" font-size="{fs}" fill="{color}">{spans}</text>')
+
+    def grid_defs(key):
+        w, h, g, _ = FLAP[key]
+        half = h / 2
+        defs.append(f'<clipPath id="c{key}"><rect width="{w}" height="{h}" rx="3"/></clipPath>')
+        # empty flap, and a hinge line drawn over the letters
+        defs.append(f'<pattern id="e{key}" x="{X}" y="0" width="{w + g}" height="{h}" patternUnits="userSpaceOnUse">'
+                    f'<rect width="{w}" height="{h}" rx="3" fill="{CELL}"/><rect width="{w}" height="{half}" rx="3" fill="{CELL_TOP}"/></pattern>')
+        defs.append(f'<pattern id="k{key}" x="{X}" y="0" width="{w + g}" height="{h}" patternUnits="userSpaceOnUse">'
+                    f'<rect y="{half - .6}" width="{w}" height="1.2" fill="{BOARD_BG}"/>'
+                    f'<rect y="{half - 3}" width="1.6" height="6" fill="{BOARD_BG}"/><rect x="{w - 1.6}" y="{half - 3}" width="1.6" height="6" fill="{BOARD_BG}"/></pattern>')
+
+    def row(key, y, cells, parts, delay):
+        """parts: list of (start_cell, text, strip_id). Draws empty flaps, then letters, then hinges."""
+        w, h, g, _ = FLAP[key]
+        pitch = w + g
+        width = cells * pitch - g
+        # patterns are anchored at y=0, so shift each row's rect with a transform
+        out = [f'<g transform="translate(0 {y})">',
+               f'<rect x="{X}" width="{width}" height="{h}" fill="url(#e{key})"/>']
+        n = 0
+        for start, text, sid in parts:
+            for i, ch in enumerate(text):
+                if ch == " ":
+                    continue
+                t = FLAP_ALPHA.index(ch)
+                cx = X + (start + i) * pitch
+                d = delay + (start + i) * 0.028
+                out.append(f'<g transform="translate({cx:.1f} 0)"><g clip-path="url(#c{key})">'
+                           f'<use href="#s{sid}" class="r" style="transform:translateY(-{t * h}px);animation-duration:{t * FLAP_STEP:.3f}s;animation-delay:{d:.3f}s;animation-timing-function:steps({t},start)"/></g>'
+                           f'<rect class="fl" width="{w}" height="{h / 2}" fill="{CELL_TOP}" style="animation-duration:{FLAP_STEP}s;animation-delay:{d:.3f}s;animation-iteration-count:{t}"/></g>')
+                n += 1
+        out.append(f'<rect x="{X}" width="{width}" height="{h}" fill="url(#k{key})"/></g>')
+        return "".join(out)
+
+    for key in FLAP:
+        grid_defs(key)
+    strip("L", PAPER, "L")
+    strip("M", PAPER, "M")
+    strip("S", PAPER, "S")
+    strip("S", ORANGE_LT, "So")
+
+    # header
+    y = 56
+    plane = (f'<g transform="translate({X} {y - 19}) scale(1.05)" fill="none" stroke="{ORANGE_LT}" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'
+             '<path d="M2 15.5l2-.6 4 1.6 4.6-2.6L6 8.6l2.4-.8 9 3.6 4.2-2.4c1.1-.6 2.4-.4 2.8.4.4.8-.2 1.8-1.3 2.4L8.4 19.6c-.9.5-2 .5-2.9 0Z"/><path d="M3 23h19"/></g>')
+    body.append(plane)
+    body.append(f'<text class="m" x="{X + 36}" y="{y}" font-size="17" letter-spacing="5" fill="{PAPER}" font-weight="700">{esc(M.use("DEPARTURES"))}</text>')
+    right = "NOIDA, IN  ·  SINCE 2023"
+    body.append(f'<text class="m" x="{W - X}" y="{y}" font-size="13" letter-spacing="2" fill="{DIM}" text-anchor="end">{esc(M.use(right))}</text>')
+    body.append(f'<line x1="{X}" y1="{y + 22}" x2="{W - X}" y2="{y + 22}" stroke="{LINE}"/>')
+
+    # name and role
+    wL, hL, gL, _ = FLAP["L"]
+    nL = int((inner + gL) // (wL + gL))
+    yName = 104
+    body.append(row("L", yName, nL, [(0, "ANEK KUMAR", "L")], 0.15))
+    wM, hM, gM, _ = FLAP["M"]
+    nM = int((inner + gM) // (wM + gM))
+    yRole = yName + hL + 16
+    body.append(row("M", yRole, nM, [(0, "FULL STACK DEV & DIGITAL MARKETER", "M")], 0.9))
+
+    # timetable
+    wS, hS, gS, _ = FLAP["S"]
+    pS = wS + gS
+    nS = int((inner + gS) // pS)
+    cols = [(0, "FLIGHT"), (6, "DESTINATION"), (21, "SERVICE"), (30, "STATUS")]
+    yLab = yRole + hM + 38
+    for c, label in cols:
+        body.append(f'<text class="m" x="{X + c * pS}" y="{yLab}" font-size="11" letter-spacing="2" fill="{DIM}">{esc(M.use(label))}</text>')
+    y0 = yLab + 12
+    for i, (fl, dest, svc, status) in enumerate(FLIGHTS):
+        parts = [(0, fl, "S"), (6, dest, "S"), (21, svc, "S"), (30, status, "So")]
+        body.append(row("S", y0 + i * (hS + 8), nS, parts, 1.6 + i * 0.22))
+    yEnd = y0 + len(FLIGHTS) * (hS + 8) + 14
+
+    # now boarding
+    body.append(f'<line x1="{X}" y1="{yEnd}" x2="{W - X}" y2="{yEnd}" stroke="{LINE}"/>')
+    yb = yEnd + 24
+    pill = "NOW BOARDING"
+    pw = M.width(pill, 12, 1.6) + 42
+    body.append(f'<rect x="{X}" y="{yb}" width="{pw:.1f}" height="28" rx="4" fill="{ORANGE}"/>')
+    body.append(f'<circle class="lamp" cx="{X + 15}" cy="{yb + 14}" r="4.5" fill="{INK}"/>')
+    body.append(f'<text class="m" x="{X + 28}" y="{yb + 18.5}" font-size="12" letter-spacing="1.6" fill="{INK}" font-weight="700">{esc(M.use(pill))}</text>')
+    msg = "FREELANCE PROJECTS  ·  WHATSAPP +91 95188 48804"
+    body.append(f'<text class="m" x="{X + pw + 18:.1f}" y="{yb + 19}" font-size="14" letter-spacing="1.2" fill="{PAPER}">{esc(M.use(msg))}</text>')
+    body.append(f'<text class="m" x="{W - X}" y="{yb + 19}" font-size="13" letter-spacing="1" fill="{DIM}" text-anchor="end">{esc(M.use("anekkumar.in"))}</text>')
+    H = yb + 28 + 32
+
+    frame = (f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="{INK}"/>'
+             f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="#fff" filter="url(#grain)" opacity=".045"/>'
+             f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="none" stroke="{LINE}"/>')
     css = f'''
-.strip{{font-size:13px;letter-spacing:1.3px;fill:{DIM}}}
-.head{{fill:{PAPER};opacity:0;animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}}
-.w1{{animation-delay:.15s}} .w2{{animation-delay:.3s}}
-.marker{{transform-box:fill-box;transform-origin:0 50%;transform:rotate(-1.2deg) scaleX(0);animation:mark .7s cubic-bezier(.6,0,.2,1) 1s forwards}}
-.note{{opacity:0;animation:fade .6s ease 1.7s forwards}}
-.arrow path{{stroke-dasharray:240;stroke-dashoffset:240;animation:draw 1s cubic-bezier(.6,0,.2,1) 2s forwards}}
-.arrow path+path{{animation-delay:2.9s;animation-duration:.35s}}
-.pulse{{transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-in-out infinite}}
-@keyframes rise{{from{{opacity:0;transform:translateY(18px)}}to{{opacity:1;transform:none}}}}
-@keyframes mark{{to{{transform:rotate(-1.2deg) scaleX(1)}}}}
-@keyframes fade{{to{{opacity:1}}}}
-@keyframes draw{{to{{stroke-dashoffset:0}}}}
-@keyframes pulse{{0%,100%{{opacity:1;transform:scale(1)}}50%{{opacity:.35;transform:scale(.7)}}}}'''
-    return svg(W, H, "\n".join(body), css, "Anek Kumar: I build websites, then I bring them customers.",
-               "Full Stack Developer and Digital Marketer in Noida, India. Now at Shubharambh Infra Advisors, open to freelance projects.", [B, C, M])
+.r{{animation-name:roll;animation-fill-mode:backwards}}
+.fl{{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);animation-name:fall;animation-timing-function:linear}}
+.lamp{{animation:blink 1.4s steps(1) infinite}}
+@keyframes roll{{from{{transform:translateY(0)}}}}
+@keyframes fall{{from{{transform:scaleY(1)}}}}
+@keyframes blink{{50%{{opacity:.15}}}}
+@media (prefers-reduced-motion:reduce){{.r,.fl,.lamp{{animation:none}}}}'''
+    route = ", ".join(f"{f} to {d.title()} ({s.lower()})" for f, d, _, s in FLIGHTS)
+    return svg(W, H, frame + f"<defs>{''.join(defs)}</defs>" + "\n".join(body), css,
+               "Departures: Anek Kumar, Full Stack Developer and Digital Marketer",
+               f"A split-flap departures board. Flights: {route}. Now boarding: freelance projects, WhatsApp +91 95188 48804.",
+               [B, M])
 
 
 # ------------------------------------------------------------------ results
@@ -352,7 +427,7 @@ def footer():
 
 if __name__ == "__main__":
     # build every card first so each font collects all characters, then write (faces are subset per file)
-    for name, fn in [("hero", hero), ("results", results), ("proof", proof), ("terminal", terminal), ("footer", footer)]:
+    for name, fn in [("board", board), ("results", results), ("proof", proof), ("terminal", terminal), ("footer", footer)]:
         B.chars.clear(); C.chars.clear(); M.chars.clear()
         out = fn()
         (OUT / f"{name}.svg").write_text(out, encoding="utf-8", newline="\n")
