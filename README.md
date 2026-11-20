@@ -130,7 +130,14 @@ The CRM is an internal system, so there's no public link or screenshot.
 
 <a href="https://github.com/Anekkumar9518/devtab"><img src="https://raw.githubusercontent.com/Anekkumar9518/devtab/main/docs/hacker.png" width="100%" alt="DevTab in Hacker mode: Matrix rain, a glitching green clock and a terminal-style search box." /></a>
 
-**DevTab** is a new tab for Chrome with two looks, Developer and Hacker. It has animated 4K backgrounds or your own video, search shortcuts (`g react` searches GitHub), most-visited sites, to-dos and weather. It's a Manifest V3 extension with no tracking.
+**DevTab** is a new tab for Chrome with two looks, Developer and Hacker: a live sky with your city's real weather, a particle clock, your GitHub year as a 3D city, search shortcuts (`g react` searches GitHub), to-dos with reminders and a pet that eats ads and evolves. Its page tools work on any website:
+
+- **Website X-ray:** hover any element to see its box model, fonts and colours, then copy it as a clean, standalone HTML + CSS component.
+- **Price & change tracker:** watch a price or any text and get a notification when it changes, with price graphs.
+- **Tech stack detector, full-page screenshots with an editor, a website time machine** and an image and video downloader.
+- **Focus mode** that blocks distracting sites, a **tab sleeper**, news, ambient sounds and workspaces.
+
+Plain JavaScript, Manifest V3, no tracking.
 [Try the demo](https://anekkumar9518.github.io/devtab/) · [Install](https://github.com/Anekkumar9518/devtab/releases/latest) · [Source](https://github.com/Anekkumar9518/devtab)
 
 <br/>
