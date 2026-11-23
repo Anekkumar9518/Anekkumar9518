@@ -1,46 +1,46 @@
 {
-  "checked": "2026-11-22T11:45:40Z",
+  "checked": "2026-11-23T13:21:46Z",
   "sites": [
     {
       "host": "shubharambhinfraadvisors.com",
       "url": "https://shubharambhinfraadvisors.com/",
       "code": 200,
-      "ms": 1105,
+      "ms": 1026,
       "up": true
     },
     {
       "host": "matrixacres.in",
       "url": "https://www.matrixacres.in/",
       "code": 200,
-      "ms": 969,
+      "ms": 1296,
       "up": true
     },
     {
       "host": "visionwavetechnology.com",
       "url": "https://visionwavetechnology.com/",
       "code": 200,
-      "ms": 460,
+      "ms": 558,
       "up": true
     },
     {
       "host": "lmcstore.in",
       "url": "https://lmcstore.in/",
       "code": 200,
-      "ms": 455,
+      "ms": 516,
       "up": true
     },
     {
       "host": "harisabziwala.com",
       "url": "https://harisabziwala.com/",
       "code": 200,
-      "ms": 423,
+      "ms": 518,
       "up": true
     },
     {
       "host": "ezzycommerce.store",
       "url": "https://ezzycommerce.store/",
       "code": 200,
-      "ms": 942,
+      "ms": 1230,
       "up": true
     }
   ]
